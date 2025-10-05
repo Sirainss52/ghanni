@@ -375,7 +375,7 @@ export default function Home() {
         <AnimatedSection
           variants={sectionVariants}
           innerRef={skillRef as React.RefObject<HTMLElement>}
-          extraClass="scroll-mt-20"
+          extraClass="scroll-mt-20 md:scroll-mt-0"
         >
           <motion.div
             initial={{ opacity: 0, y: 100 }}
