@@ -489,7 +489,7 @@ function AnimatedSection({
   children,
   variants,
   innerRef,
-  extraClass="",
+  extraClass = "",
 }: AnimatedSectionProps) {
   return (
     <motion.section
