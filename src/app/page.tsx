@@ -38,6 +38,7 @@ export default function Home() {
   const contactRef = useRef<HTMLElement>(null);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const skills = [
     { name: "React", icon: <SiReact size={40} color="#61DAFB" /> },
@@ -82,6 +83,12 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Parallax effect
@@ -209,6 +216,7 @@ export default function Home() {
         <AnimatedSection
           variants={sectionVariants}
           innerRef={homeRef as React.RefObject<HTMLElement>}
+          extraClass="scroll-mt-15"
         >
           <div className="w-full h-screen container grid grid-cols-1 md:grid-cols-2 gap-0 relative">
             {/* Gambar di Mobile */}
@@ -298,6 +306,7 @@ export default function Home() {
         <AnimatedSection
           variants={sectionVariants}
           innerRef={aboutRef as React.RefObject<HTMLElement>}
+          extraClass="scroll-mt-15"
         >
           <motion.div
             initial={{ opacity: 0, y: 100 }}
@@ -375,14 +384,14 @@ export default function Home() {
         <AnimatedSection
           variants={sectionVariants}
           innerRef={skillRef as React.RefObject<HTMLElement>}
-          extraClass="scroll-mt-20 md:scroll-mt-0"
+          extraClass={isMobile ? "scroll-mt-15" : "scroll-mt-0"}
         >
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: false, amount: 0.3 }}
-            className="max-w-5xl mx-auto text-center px-4 mt-16 md:mt-32"
+            className="max-w-5xl mx-auto text-center px-4 mt-16 md:mt-0"
           >
             {/* Title */}
             <h2 className="text-4xl font-extrabold mb-3 text-white">
@@ -467,6 +476,23 @@ export default function Home() {
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                 </svg>
               </a>
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/ghannibrtma/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-20 h-20 rounded-full bg-white/10 transition flex items-center justify-center 
+      hover:bg-[#E4405F] group hover:scale-110"
+                aria-label="Instagram"
+              >
+                <svg
+                  className="w-10 h-10 fill-current"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 3.25a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5zm5-1a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+              </a>
             </div>
             <div className="mt-8">
               <button
@@ -498,7 +524,7 @@ function AnimatedSection({
       whileInView="show"
       viewport={{ once: false, amount: 0.2 }}
       variants={variants}
-      className={`min-h-screen flex items-center justify-center px-4 ${extraClass}`}
+      className={`min-h-screen flex items-center justify-center px-4 md:scroll-mt-24 ${extraClass} `}
     >
       {children}
     </motion.section>
